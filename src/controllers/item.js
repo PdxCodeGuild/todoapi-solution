@@ -6,7 +6,10 @@ const Item = require('../models/Item');
 const router = Router();
 
 const createValidators = [
-  check("task").exists(),
+  check("task").exists().isLength({
+    min: 1,
+    max: 256,
+  }),
   check("list").exists(),
 ];
 

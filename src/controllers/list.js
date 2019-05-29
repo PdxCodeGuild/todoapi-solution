@@ -6,7 +6,10 @@ const List = require('../models/List');
 const router = Router();
 
 const createValidators = [
-  check("name").exists(),
+  check("name").exists().isLength({
+    min: 1,
+    max: 256,
+  }),
 ];
 
 // List
@@ -24,10 +27,8 @@ router.post('/', createValidators, async (req, res) => {
     return res.status(422).send({ errors: errors.array() });
   }
 
-
   try {
     const list = new List(req.body);
-
     await list.save();
 
     res.send(list);
